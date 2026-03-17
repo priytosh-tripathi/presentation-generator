@@ -1,0 +1,15 @@
+# Azure Functions local settings (contains API keys)
+api/local.settings.json
+
+# Dependencies
+api/node_modules/
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+
+*.swp
+*.swo

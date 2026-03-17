@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Presentation Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <h1>AI Presentation Generator</h1>
+      <p>Create stunning, style-aware presentations powered by AI</p>
+    </header>
+
+    <div class="main-content">
+      <!-- ========== Form Panel ========== -->
+      <section class="form-panel glass" id="formPanel">
+        <div id="errorMessage" class="error-message"></div>
+
+        <div class="form-group">
+          <label for="topic">Topic</label>
+          <input type="text" id="topic" class="form-input" placeholder="e.g. Quarterly Business Review Q4 2025" maxlength="200">
+        </div>
+
+        <div class="form-group">
+          <label for="prompt">Detailed Prompt</label>
+          <textarea id="prompt" class="form-textarea" placeholder="Describe what the presentation should cover, key points, data to include..." maxlength="2000"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="style">Presentation Style</label>
+            <select id="style" class="form-select">
+              <option value="formal">Formal</option>
+              <option value="professional" selected>Professional</option>
+              <option value="fun">Fun</option>
+              <option value="creative">Creative</option>
+              <option value="minimalist">Minimalist</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="audience">Target Audience</label>
+            <select id="audience" class="form-select">
+              <option value="engineering">Engineering Team</option>
+              <option value="product">Product Team</option>
+              <option value="leadership" selected>Leadership / Executives</option>
+              <option value="marketing">Marketing Team</option>
+              <option value="sales">Sales Team</option>
+              <option value="general">General Audience</option>
+              <option value="academic">Students / Academic</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="slideCount">Number of Slides</label>
+            <select id="slideCount" class="form-select">
+              <option value="auto" selected>Auto</option>
+              <option value="5">5</option>
+              <option value="8">8</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-primary" id="generateBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+          Generate Presentation
+        </button>
+
+        <!-- Loading overlay -->
+        <div class="loading-overlay" id="loadingOverlay">
+          <div class="spinner"></div>
+          <div class="loading-steps">
+            <div class="loading-step" data-step="analyze">Analyzing your topic &amp; style...</div>
+            <div class="loading-step" data-step="generate">Generating slide content with AI...</div>
+            <div class="loading-step" data-step="build">Building themed presentation...</div>
+            <div class="loading-step" data-step="render">Rendering interactive preview...</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== Preview + Editor ========== -->
+      <div class="preview-editor-layout" id="previewEditorLayout">
+        <!-- Preview -->
+        <section class="preview-panel glass" id="previewPanel">
+          <div class="preview-toolbar">
+            <span class="preview-title">Preview</span>
+            <button class="btn btn-secondary btn-icon" id="btnNewTab" title="Open in new tab">↗</button>
+            <button class="btn btn-secondary" id="btnBackToForm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              New
+            </button>
+          </div>
+          <div class="preview-iframe-wrapper">
+            <iframe id="previewIframe" sandbox="allow-scripts allow-same-origin" title="Presentation preview"></iframe>
+          </div>
+        </section>
+
+        <!-- Editor Sidebar -->
+        <aside class="editor-panel glass" id="editorPanel">
+          <!-- Slides list -->
+          <div class="editor-section">
+            <div class="editor-section-title">Slides</div>
+            <ul class="slide-list" id="slideList"></ul>
+            <button class="btn btn-secondary" id="btnAddSlide" style="width:100%;margin-top:.5rem;font-size:.8rem;">+ Add Slide</button>
+          </div>
+
+          <!-- Content editor -->
+          <div class="editor-section">
+            <div class="editor-section-title">Slide Content</div>
+            <textarea class="editor-textarea" id="slideContentEditor" placeholder="Select a slide to edit its content..."></textarea>
+          </div>
+
+          <!-- Font picker -->
+          <div class="editor-section">
+            <div class="editor-section-title">Fonts</div>
+            <label style="font-size:.78rem;color:var(--text-dim);margin-bottom:.3rem;display:block;">Heading + Body Font Pair</label>
+            <select class="font-select" id="fontPairSelect">
+              <option value="inter-system">Inter + System Sans</option>
+              <option value="playfair-lora">Playfair Display + Lora</option>
+              <option value="nunito-quicksand">Nunito + Quicksand</option>
+              <option value="space-dm">Space Grotesk + DM Sans</option>
+              <option value="jetbrains-inter">JetBrains Mono + Inter</option>
+              <option value="poppins-opensans">Poppins + Open Sans</option>
+              <option value="raleway-roboto">Raleway + Roboto</option>
+              <option value="montserrat-source">Montserrat + Source Sans 3</option>
+            </select>
+          </div>
+
+          <!-- Colors -->
+          <div class="editor-section">
+            <div class="editor-section-title">Colors</div>
+            <div class="color-row">
+              <label>Background</label>
+              <input type="color" class="color-picker" id="colorBg" value="#1a1a2e">
+              <div class="preset-swatches" id="bgSwatches"></div>
+            </div>
+            <div class="color-row">
+              <label>Text</label>
+              <input type="color" class="color-picker" id="colorText" value="#f0f0f5">
+            </div>
+            <div class="color-row">
+              <label>Accent</label>
+              <input type="color" class="color-picker" id="colorAccent" value="#7c5cfc">
+            </div>
+            <div class="toggle-row">
+              <label>Gradient Background</label>
+              <div class="toggle">
+                <input type="checkbox" id="gradientToggle">
+                <span class="toggle-slider"></span>
+              </div>
+            </div>
+            <div class="range-row" id="gradientAngleRow" style="display:none;">
+              <label style="font-size:.78rem;color:var(--text-dim);">Angle</label>
+              <input type="range" id="gradientAngle" min="0" max="360" value="135">
+              <span class="range-value" id="gradientAngleValue">135°</span>
+            </div>
+          </div>
+
+          <!-- Background pattern -->
+          <div class="editor-section">
+            <div class="editor-section-title">Background Pattern</div>
+            <div class="option-pills" id="bgPatternPills">
+              <button class="option-pill active" data-pattern="none">None</button>
+              <button class="option-pill" data-pattern="dots">Dots</button>
+              <button class="option-pill" data-pattern="lines">Lines</button>
+              <button class="option-pill" data-pattern="waves">Waves</button>
+            </div>
+          </div>
+
+          <!-- Navigation style override -->
+          <div class="editor-section">
+            <div class="editor-section-title">Navigation Style</div>
+            <div class="option-pills" id="navStylePills">
+              <button class="option-pill" data-nav="formal">Hidden Bar</button>
+              <button class="option-pill" data-nav="professional">Bottom Toolbar</button>
+              <button class="option-pill" data-nav="fun">Floating Pill</button>
+              <button class="option-pill" data-nav="creative">Side Rail</button>
+              <button class="option-pill" data-nav="minimalist">Counter Only</button>
+            </div>
+          </div>
+
+          <!-- Transition -->
+          <div class="editor-section">
+            <div class="editor-section-title">Transition</div>
+            <div class="option-pills" id="transitionPills">
+              <button class="option-pill active" data-transition="fade">Fade</button>
+              <button class="option-pill" data-transition="slide">Slide</button>
+              <button class="option-pill" data-transition="zoom">Zoom</button>
+              <button class="option-pill" data-transition="flip">Flip</button>
+            </div>
+          </div>
+
+          <!-- Action bar -->
+          <div class="action-bar">
+            <button class="btn btn-primary" id="btnDownload">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download
+            </button>
+            <button class="btn btn-secondary" id="btnCopyHTML">Copy HTML</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/themes.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/generator.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
