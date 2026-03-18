@@ -267,7 +267,7 @@ window.Editor = (function () {
     var toggle = document.getElementById('gradientToggle');
     if (toggle) toggle.checked = state.gradient;
     var angleRow = document.getElementById('gradientAngleRow');
-    if (angleRow) angleRow.style.display = state.gradient ? 'flex' : 'none';
+    if (angleRow) angleRow.classList.toggle('hidden', !state.gradient);
     var angleInput = document.getElementById('gradientAngle');
     if (angleInput) angleInput.value = state.gradientAngle;
     var angleVal = document.getElementById('gradientAngleValue');
@@ -284,11 +284,13 @@ window.Editor = (function () {
 
   /* ── Bind all events ── */
   function bindEvents() {
-    // Content editor
+    // Content editor — remove old listener before adding new one
     var editor = document.getElementById('slideContentEditor');
     if (editor) {
-      editor.removeEventListener('input', onContentChange);
-      editor.addEventListener('input', debounce(onContentChange, 400));
+      var debouncedContentChange = debounce(onContentChange, 400);
+      editor.removeEventListener('input', editor._boundContentChange);
+      editor._boundContentChange = debouncedContentChange;
+      editor.addEventListener('input', debouncedContentChange);
     }
 
     // Add slide

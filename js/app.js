@@ -23,6 +23,7 @@
   var styleSelect      = document.getElementById('style');
   var audienceSelect   = document.getElementById('audience');
   var slideCountSelect = document.getElementById('slideCount');
+  var designLangSelect  = document.getElementById('designLanguage');
 
   // ── State ──
   var currentHTML = '';
@@ -44,7 +45,8 @@
       prompt: (promptInput.value || '').trim(),
       style: styleSelect.value,
       audience: audienceSelect.value,
-      slideCount: slideCountSelect.value
+      slideCount: slideCountSelect.value,
+      designLanguage: designLangSelect.value
     };
 
     // Show loading
@@ -97,10 +99,18 @@
   }
 
   function writeToIframe(html) {
-    var doc = previewIframe.contentDocument || previewIframe.contentWindow.document;
-    doc.open();
-    doc.write(html);
-    doc.close();
+    try {
+      var doc = previewIframe.contentDocument || previewIframe.contentWindow.document;
+      if (!doc) {
+        console.error('Could not access iframe document.');
+        return;
+      }
+      doc.open();
+      doc.write(html);
+      doc.close();
+    } catch (err) {
+      console.error('Failed to write to iframe:', err);
+    }
   }
 
   // ── Show / hide views ──

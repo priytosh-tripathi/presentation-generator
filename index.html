@@ -68,6 +68,19 @@
               <option value="15">15</option>
             </select>
           </div>
+          <div class="form-group">
+            <label for="designLanguage">Design Language</label>
+            <select id="designLanguage" class="form-select">
+              <option value="glassmorphism">Glassmorphism</option>
+              <option value="material" selected>Material Design</option>
+              <option value="fluent">Fluent Design</option>
+              <option value="neomorphism">Neomorphism</option>
+              <option value="brutalist">Brutalist</option>
+              <option value="aurora">Aurora / Gradient Mesh</option>
+              <option value="retro">Retro / Vintage</option>
+              <option value="swiss">Swiss / International</option>
+            </select>
+          </div>
         </div>
 
         <button type="button" class="btn btn-primary" id="generateBtn">
@@ -110,7 +123,7 @@
           <div class="editor-section">
             <div class="editor-section-title">Slides</div>
             <ul class="slide-list" id="slideList"></ul>
-            <button class="btn btn-secondary" id="btnAddSlide" style="width:100%;margin-top:.5rem;font-size:.8rem;">+ Add Slide</button>
+            <button class="btn btn-secondary btn-add-slide" id="btnAddSlide">+ Add Slide</button>
           </div>
 
           <!-- Content editor -->
@@ -122,8 +135,8 @@
           <!-- Font picker -->
           <div class="editor-section">
             <div class="editor-section-title">Fonts</div>
-            <label style="font-size:.78rem;color:var(--text-dim);margin-bottom:.3rem;display:block;">Heading + Body Font Pair</label>
-            <select class="font-select" id="fontPairSelect">
+            <label class="editor-label" for="fontPairSelect">Heading + Body Font Pair</label>
+            <select class="font-select" id="fontPairSelect" title="Select font pair">
               <option value="inter-system">Inter + System Sans</option>
               <option value="playfair-lora">Playfair Display + Lora</option>
               <option value="nunito-quicksand">Nunito + Quicksand</option>
@@ -140,26 +153,26 @@
             <div class="editor-section-title">Colors</div>
             <div class="color-row">
               <label>Background</label>
-              <input type="color" class="color-picker" id="colorBg" value="#1a1a2e">
+              <input type="color" class="color-picker" id="colorBg" value="#1a1a2e" title="Background color">
               <div class="preset-swatches" id="bgSwatches"></div>
             </div>
             <div class="color-row">
               <label>Text</label>
-              <input type="color" class="color-picker" id="colorText" value="#f0f0f5">
+              <input type="color" class="color-picker" id="colorText" value="#f0f0f5" title="Text color">
             </div>
             <div class="color-row">
               <label>Accent</label>
-              <input type="color" class="color-picker" id="colorAccent" value="#7c5cfc">
+              <input type="color" class="color-picker" id="colorAccent" value="#7c5cfc" title="Accent color">
             </div>
             <div class="toggle-row">
               <label>Gradient Background</label>
               <div class="toggle">
-                <input type="checkbox" id="gradientToggle">
+                <input type="checkbox" id="gradientToggle" title="Toggle gradient background">
                 <span class="toggle-slider"></span>
               </div>
             </div>
-            <div class="range-row" id="gradientAngleRow" style="display:none;">
-              <label style="font-size:.78rem;color:var(--text-dim);">Angle</label>
+            <div class="range-row hidden" id="gradientAngleRow">
+              <label class="editor-label" for="gradientAngle">Angle</label>
               <input type="range" id="gradientAngle" min="0" max="360" value="135">
               <span class="range-value" id="gradientAngleValue">135°</span>
             </div>

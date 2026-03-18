@@ -27,7 +27,8 @@ window.AI = (function () {
         prompt: params.prompt,
         style: params.style,
         audience: params.audience,
-        slideCount: params.slideCount
+        slideCount: params.slideCount,
+        designLanguage: params.designLanguage
       })
     });
 
@@ -42,10 +43,18 @@ window.AI = (function () {
       throw new Error(body.error || 'Request failed with status ' + res.status);
     }
 
-    // Basic validation
+    // Validate response structure
+    if (!body.title || !body.subtitle) {
+      throw new Error('Server returned incomplete data (missing title or subtitle).');
+    }
     if (!body.slides || !Array.isArray(body.slides) || body.slides.length === 0) {
       throw new Error('Server returned an invalid presentation structure.');
     }
+    body.slides.forEach(function (s, i) {
+      if (!s.heading && !s.content) {
+        throw new Error('Slide ' + (i + 1) + ' is missing both heading and content.');
+      }
+    });
 
     return body;
   }

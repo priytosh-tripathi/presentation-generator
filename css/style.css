@@ -54,8 +54,8 @@ body::before {
 /* ---------- Glass Card Mixin ---------- */
 .glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(var(--blur));
   -webkit-backdrop-filter: blur(var(--blur));
+  backdrop-filter: blur(var(--blur));
   border: 1px solid var(--glass-border);
   border-radius: var(--radius);
   box-shadow: var(--glass-shadow);
@@ -433,6 +433,11 @@ body::before {
 .font-select:focus {
   border-color: var(--accent);
 }
+
+/* Editor utility classes */
+.btn-add-slide { width: 100%; margin-top: .5rem; font-size: .8rem; }
+.editor-label { font-size: .78rem; color: var(--text-dim); margin-bottom: .3rem; display: block; }
+.hidden { display: none; }
 
 /* Range slider */
 .range-row {
