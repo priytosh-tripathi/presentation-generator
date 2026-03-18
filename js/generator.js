@@ -190,7 +190,6 @@ window.PresentationGenerator = (function () {
       + '.slide.bg-ocean,.slide.bg-sunset,.slide.bg-forest,.slide.bg-aurora,.slide.bg-ember,.slide.bg-lavender,.slide.bg-midnight,.slide.bg-rose,.slide.bg-nord{color:#f0f0f5 !important}'
       + '.slide.bg-ocean h1,.slide.bg-ocean h2,.slide.bg-sunset h1,.slide.bg-sunset h2,.slide.bg-forest h1,.slide.bg-forest h2,.slide.bg-aurora h1,.slide.bg-aurora h2,.slide.bg-ember h1,.slide.bg-ember h2,.slide.bg-lavender h1,.slide.bg-lavender h2,.slide.bg-midnight h1,.slide.bg-midnight h2,.slide.bg-rose h1,.slide.bg-rose h2,.slide.bg-nord h1,.slide.bg-nord h2{color:#ffffff !important}';
   }
-  }
 
   /* ── Rich component render helpers ── */
   function renderHighlights(highlights) {
