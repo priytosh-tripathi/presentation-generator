@@ -366,9 +366,9 @@ PRESENTATION EXCELLENCE CHECKLIST
 - Content should feel like it was crafted by a professional keynote writer — polished, purposeful, and powerful.`;
 }
 
-const AZURE_OPENAI_ENDPOINT = process.env.AZURE_OPENAI_ENDPOINT || "https://ai-pm-review-agent-model.cognitiveservices.azure.com";
-const AZURE_API_VERSION = process.env.AZURE_API_VERSION || "2025-01-01-preview";
-const DEPLOYMENT_NAME = process.env.AZURE_DEPLOYMENT_NAME || "gpt-4o";
+const AZURE_OPENAI_ENDPOINT = process.env.AZURE_OPENAI_ENDPOINT || "https://priyt-mjgtjrxf-eastus2.cognitiveservices.azure.com";
+const AZURE_API_VERSION = process.env.AZURE_API_VERSION || "2024-12-01-preview";
+const DEPLOYMENT_NAME = process.env.AZURE_DEPLOYMENT_NAME || "gpt-5.3-chat";
 
 module.exports = async function (context, req) {
   // Validate API key is configured
